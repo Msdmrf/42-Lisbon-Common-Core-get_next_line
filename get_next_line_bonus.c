@@ -6,7 +6,7 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:46:30 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/10 15:40:16 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/10 18:00:45 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer[1024];
+	static char	*buffer[BUFFER_SIZE + 1];
 	char		*line;
 	ssize_t		bytes;
 
@@ -37,7 +37,9 @@ char	*get_next_line(int fd)
 		{
 			if (bytes < 0 && line)
 				free(line);
-			return ((bytes < 0) ? NULL : line);
+			if (bytes < 0)
+				return (NULL);
+			return (line);
 		}
 		buffer[fd][bytes] = '\0';
 		line = handle_buffer(&buffer[fd], &line);

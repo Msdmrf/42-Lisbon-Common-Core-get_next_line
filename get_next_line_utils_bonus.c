@@ -6,13 +6,12 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:48:17 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/10 15:12:54 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/10 17:24:42 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-/* Returns length of string */
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
@@ -25,7 +24,6 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-/* Locates first occurrence of character in string */
 char	*ft_strchr(const char *s, int c)
 {
 	if (!s)
@@ -41,7 +39,6 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-/* Joins two strings and frees the first one */
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
@@ -68,7 +65,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-/* Processes buffer content and joins with existing line */
 char	*handle_buffer(char **buffer, char **line)
 {
 	char	*temp;
@@ -97,7 +93,6 @@ char	*handle_buffer(char **buffer, char **line)
 	return (*line);
 }
 
-/* Shifts remaining content to start of buffer */
 void	clean_buffer(char *buffer)
 {
 	int	i;

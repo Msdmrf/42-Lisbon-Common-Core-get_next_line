@@ -6,7 +6,7 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:46:48 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/10 15:31:32 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/10 17:32:50 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,3 +30,4 @@ void	clean_buffer(char *buffer);
 char	*ft_strchr(const char *s, int c);
 
 #endif
+
