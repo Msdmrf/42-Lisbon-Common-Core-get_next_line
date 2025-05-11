@@ -6,7 +6,7 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 15:41:56 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/10 17:29:28 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/11 13:59:33 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	test_single_fd(int fd, const char *test_name)
 	printf("\n%s\n", test_name);
 	if (fd < 0)
 	{
-		printf("Error: Could not open file\n");
+		printf("Error: Could not open file.\n");
 		return ;
 	}
 	count = 1;
@@ -32,6 +32,22 @@ void	test_single_fd(int fd, const char *test_name)
 	close(fd);
 }
 
+void	test_invalid_fds(void)
+{
+	char	*line;
+
+	printf("\n--- Test 5 - Invalid fds ---\n");
+	line = get_next_line(-1);
+	printf("fd -1: %s\n", line ? line : "NULL");
+	free(line);
+	line = get_next_line(1024);
+	printf("fd 1024: %s\n", line ? line : "NULL");
+	free(line);
+	line = get_next_line(2147483647);
+	printf("fd MAX_INT: %s\n", line ? line : "NULL");
+	free(line);
+}
+
 void	test_multiple_fds(void)
 {
 	int		fd1;
@@ -40,7 +56,7 @@ void	test_multiple_fds(void)
 	char	*line;
 	int		i;
 
-	printf("\n--- Testing Multiple FDs Simultaneously ---\n");
+	printf("\n--- Test 6 - Multiple FDs Simultaneously ---\n");
 	fd1 = open("test1_bonus.txt", O_RDONLY);
 	fd2 = open("test2_bonus.txt", O_RDONLY);
 	fd3 = open("test3_bonus.txt", O_RDONLY);
@@ -68,28 +84,12 @@ void	test_multiple_fds(void)
 	close(fd3);
 }
 
-void	test_invalid_fds(void)
-{
-	char	*line;
-
-	printf("\n--- Testing Invalid FDs ---\n");
-	line = get_next_line(-1);
-	printf("fd -1: %s\n", line ? line : "NULL");
-	free(line);
-	line = get_next_line(1024);
-	printf("fd 1024: %s\n", line ? line : "NULL");
-	free(line);
-	line = get_next_line(2147483647);
-	printf("fd MAX_INT: %s\n", line ? line : "NULL");
-	free(line);
-}
-
 void	test_stdin(void)
 {
 	char	*line;
 	int		count;
 
-	printf("\n--- Testing Standard Input (type lines, Ctrl+D to end) ---\n");
+	printf("\n--- Test 7 - Standard input (type some lines, Ctrl+D to end) ---\n");
 	count = 1;
 	while ((line = get_next_line(0)) != NULL)
 	{
@@ -114,11 +114,11 @@ int	main(void)
 	// Test 4: Only newlines
 	test_single_fd(open("test_newlines_bonus.txt", O_RDONLY), "\n--- Test 4 - Only newlines ---");
 
-	// Test 5: Multiple FDs
-	test_multiple_fds();
-
-	// Test 6: Invalid FDs
+	// Test 5: Invalid FDs
 	test_invalid_fds();
+	
+	// Test 6: Multiple FDs
+	test_multiple_fds();
 
 	// Test 7: Standard input (interactive)
 	test_stdin();

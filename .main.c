@@ -6,7 +6,7 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 15:37:43 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/10 17:29:26 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/11 13:51:55 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	test_fd(int fd, const char *test_name)
 
 	if (fd < 0)
 	{
-		printf("\n%s: Failed to open file\n", test_name);
+		printf("\n%sError: Could not open file.\n", test_name);
 		return;
 	}
 	printf("\n%s\n", test_name);
@@ -53,7 +53,7 @@ int	main(void)
 	test_fd(fd, "\n--- Test 4 - Only newlines ---");
 
 	// Test 5: Invalid fd
-	test_fd(-1, "--- Test 5 - Invalid fd ---");
+	test_fd(-1, "--- Test 5 - Invalid fd ---\n");
 
 	// Test 6: Multiple file descriptors
 	int fd1 = open("test1.txt", O_RDONLY);
@@ -61,7 +61,7 @@ int	main(void)
 	int fd3 = open("test3.txt", O_RDONLY);
 
 	char *line;
-	printf("\n--- Test 6 - Multiple FDs ---\n");
+	printf("\n--- Test 6 - Multiple FDs Simultaneously ---\n");
 	line = get_next_line(fd1);
 	printf("fd1: %s", line);
 	free(line);
