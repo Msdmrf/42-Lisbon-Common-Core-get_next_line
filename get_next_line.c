@@ -6,7 +6,7 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:40:32 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/11 18:32:13 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:30:14 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,12 @@ char	*get_next_line(int fd)
 	while (!ft_strlenchr(line, '\n', NULL))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (bytes <= 0)
+		if (bytes < 0)
+		{
+			free(line);
+			return (NULL);
+		}
+		if (bytes == 0)
 			return (line);
 		buffer[bytes] = '\0';
 		line = ft_bufexclean(buffer, &line);
