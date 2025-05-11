@@ -6,7 +6,7 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:48:17 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/11 18:32:04 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/11 20:21:32 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,16 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-char	*ft_bufexclean(char **buffer, char **line)
+char	*ft_bufexclean(char *buffer, char **line)
 {
 	char	*temp;
 	size_t	idx[2];
 	size_t	len;
 
 	idx[0] = 0;
-	while ((*buffer)[idx[0]] && (*buffer)[idx[0]] != '\n')
+	while (buffer[idx[0]] && buffer[idx[0]] != '\n')
 		idx[0]++;
-	if ((*buffer)[idx[0]] == '\n')
+	if (buffer[idx[0]] == '\n')
 		idx[0]++;
 	len = idx[0];
 	temp = malloc(len + 1);
@@ -83,13 +83,13 @@ char	*ft_bufexclean(char **buffer, char **line)
 		return (NULL);
 	idx[0] = -1;
 	while (++idx[0] < len)
-		temp[idx[0]] = (*buffer)[idx[0]];
+		temp[idx[0]] = buffer[idx[0]];
 	temp[len] = '\0';
 	*line = ft_strjoin(*line, temp);
 	free(temp);
 	idx[1] = 0;
-	while ((*buffer)[idx[0]])
-		(*buffer)[idx[1]++] = (*buffer)[idx[0]++];
-	(*buffer)[idx[1]] = '\0';
+	while (buffer[idx[0]])
+		buffer[idx[1]++] = buffer[idx[0]++];
+	buffer[idx[1]] = '\0';
 	return (*line);
 }
