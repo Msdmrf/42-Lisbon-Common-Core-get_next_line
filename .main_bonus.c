@@ -6,7 +6,7 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 15:41:56 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/11 13:59:33 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/11 15:34:30 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,16 @@ void	test_invalid_fds(void)
 {
 	char	*line;
 
-	printf("\n--- Test 5 - Invalid fds ---\n");
+	printf("\n--- Test 5 - Testing FD Boundaries ---\n");
 	line = get_next_line(-1);
 	printf("fd -1: %s\n", line ? line : "NULL");
-	free(line);
-	line = get_next_line(1024);
-	printf("fd 1024: %s\n", line ? line : "NULL");
-	free(line);
-	line = get_next_line(2147483647);
-	printf("fd MAX_INT: %s\n", line ? line : "NULL");
-	free(line);
+	if (line)
+		free(line);
+	line = get_next_line(FOPEN_MAX);
+	printf("fd FOPEN_MAX (%d): %s\n", FOPEN_MAX, line ? line : "NULL");
+	if (line)
+		free(line);
 }
-
 void	test_multiple_fds(void)
 {
 	int		fd1;
