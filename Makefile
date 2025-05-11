@@ -6,7 +6,7 @@
 #    By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/02 13:33:40 by migusant          #+#    #+#              #
-#    Updated: 2025/05/11 16:07:17 by migusant         ###   ########.fr        #
+#    Updated: 2025/05/11 16:14:17 by migusant         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -138,8 +138,12 @@ buffer: .buffer_flag $(NAME)
 
 .buffer_flag: $(CFILES)
 	@$(RM) .non_buffer_flag
-	@echo "Deleting non-buffered object files..."
-	@$(RM) $(OFILES)
+	@if [ -f ".non_buffer_flag" ]; then \
+		if [ -f "$(word 1,$(OFILES))" ]; then \
+			echo "Deleting non-buffered object files..."; \
+			$(RM) $(OFILES); \
+		fi; \
+	fi
 	@echo "Compiling files with BUFFER_SIZE=42..."
 	$(CC) $(FLAGS) $(BUFFER) -c $(CFILES)
 	@touch .buffer_flag
@@ -149,8 +153,12 @@ bonus_buffer: .bonus_buffer_flag $(BONUS_NAME)
 
 .bonus_buffer_flag: $(BCFILES)
 	@$(RM) .bonus_non_buffer_flag
-	@echo "Deleting non-buffered bonus object files..."
-	@$(RM) $(BOFILES)
+	@if [ -f ".bonus_non_buffer_flag" ]; then \
+		if [ -f "$(word 1,$(BOFILES))" ]; then \
+			echo "Deleting non-buffered bonus object files..."; \
+			$(RM) $(BOFILES); \
+		fi; \
+	fi
 	@echo "Compiling bonus files with BUFFER_SIZE=42..."
 	$(CC) $(FLAGS) $(BUFFER) -c $(BCFILES)
 	@touch .bonus_buffer_flag
@@ -197,7 +205,6 @@ fclean:
 	else \
 		echo "No executable files to clean."; \
 	fi
-
 
 # Delete test files
 delete:
