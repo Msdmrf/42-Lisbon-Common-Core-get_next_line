@@ -6,7 +6,7 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:41:11 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/11 17:46:07 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/11 18:32:19 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@
 # endif
 
 char	*get_next_line(int fd);
-void	*handle_buffer(char *buffer, char **line);
+char	*ft_strlenchr(const char *s, int c, size_t *len);
 char	*ft_strjoin(char *s1, char *s2);
-char	*ft_strutil(const char *s, int c, size_t *len);
-void	clean_buffer(char *buffer);
+char	*ft_bufexclean(char *buffer, char **line);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:46:30 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/11 17:42:39 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:22:33 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ char	*get_next_line(int fd)
 	}
 	line = NULL;
 	if (buffer[fd][0])
-		line = handle_buffer(&buffer[fd], &line);
-	while (!ft_strutil(line, '\n', NULL))
+		line = ft_bufexclean(&buffer[fd], &line);
+	while (!ft_strlenchr(line, '\n', NULL))
 	{
 		bytes = read(fd, buffer[fd], BUFFER_SIZE);
 		if (bytes <= 0)
@@ -42,7 +42,7 @@ char	*get_next_line(int fd)
 			return (line);
 		}
 		buffer[fd][bytes] = '\0';
-		line = handle_buffer(&buffer[fd], &line);
+		line = ft_bufexclean(&buffer[fd], &line);
 	}
 	return (line);
 }
