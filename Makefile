@@ -6,7 +6,7 @@
 #    By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/02 13:33:40 by migusant          #+#    #+#              #
-#    Updated: 2025/05/11 13:37:18 by migusant         ###   ########.fr        #
+#    Updated: 2025/05/11 16:07:17 by migusant         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@
 #    - Compiles mandatory part with BUFFER_SIZE=42                             #
 #    - Creates executable: get_next_line                                       #
 #                                                                              #
-#  4. make buffer_bonus                                                        #
+#  4. make bonus_buffer                                                        #
 #    - Compiles bonus part with BUFFER_SIZE=42                                 #
 #    - Creates executable: get_next_line_bonus                                 #
 #                                                                              #
@@ -41,7 +41,7 @@
 #    - Cleans everything and recompiles bonus part without BUFFER_SIZE         #
 #    - Creates executable: get_next_line_bonus                                 #
 #                                                                              #
-#  8. make re_buffer_bonus                                                     #
+#  8. make re_bonus_buffer                                                     #
 #    - Cleans everything and recompiles bonus part with BUFFER_SIZE=42         #
 #    - Creates executable: get_next_line_bonus                                 #
 #                                                                              #
@@ -63,7 +63,7 @@
 #    - Runs tests for mandatory part                                           #
 #    - Requires get_next_line executable                                       #
 #                                                                              #
-#  14. make tests_bonus                                                        #
+#  14. make bonus_tests                                                        #
 #    - Runs tests for bonus part                                               #
 #    - Requires get_next_line_bonus executable                                 #
 #                                                                              #
@@ -72,7 +72,7 @@
 #    - Runs valgrind on mandatory part                                         #
 #    - Checks for memory leaks                                                 #
 #                                                                              #
-#  16. make valgrind_bonus                                                     #
+#  16. make bonus_valgrind                                                     #
 #    - Runs valgrind on bonus part                                             #
 #    - Checks for memory leaks                                                 #
 # **************************************************************************** #
@@ -138,23 +138,19 @@ buffer: .buffer_flag $(NAME)
 
 .buffer_flag: $(CFILES)
 	@$(RM) .non_buffer_flag
-	@if [ -f "$(word 1,$(OFILES))" ]; then \
-		echo "Deleting non-buffered object files..."; \
-		$(RM) $(OFILES); \
-	fi
+	@echo "Deleting non-buffered object files..."
+	@$(RM) $(OFILES)
 	@echo "Compiling files with BUFFER_SIZE=42..."
 	$(CC) $(FLAGS) $(BUFFER) -c $(CFILES)
 	@touch .buffer_flag
 
 # Target for compiling bonus with BUFFER_SIZE
-buffer_bonus: .bonus_buffer_flag $(BONUS_NAME)
+bonus_buffer: .bonus_buffer_flag $(BONUS_NAME)
 
 .bonus_buffer_flag: $(BCFILES)
 	@$(RM) .bonus_non_buffer_flag
-	@if [ -f "$(word 1,$(BOFILES))" ]; then \
-		echo "Deleting non-buffered bonus object files..."; \
-		$(RM) $(BOFILES); \
-	fi
+	@echo "Deleting non-buffered bonus object files..."
+	@$(RM) $(BOFILES)
 	@echo "Compiling bonus files with BUFFER_SIZE=42..."
 	$(CC) $(FLAGS) $(BUFFER) -c $(BCFILES)
 	@touch .bonus_buffer_flag
@@ -202,6 +198,7 @@ fclean:
 		echo "No executable files to clean."; \
 	fi
 
+
 # Delete test files
 delete:
 	@if ls test_*.txt test[1-3].txt test[1-3]_bonus.txt 1> /dev/null 2>&1; then \
@@ -222,7 +219,7 @@ re_buffer: fclean buffer
 re_bonus: fclean bonus
 
 # Recompile bonus with buffer
-re_buffer_bonus: fclean buffer_bonus
+re_bonus_buffer: fclean bonus_buffer
 
 # Run tests
 tests:
@@ -234,7 +231,7 @@ tests:
 	@./$(NAME)
 
 # Run bonus tests
-tests_bonus:
+bonus_tests:
 	@if [ ! -f "$(BONUS_NAME)" ]; then \
 		echo "Error: $(BONUS_NAME) not found. Please run 'make bonus' first."; \
 		exit 1; \
@@ -247,8 +244,8 @@ valgrind: $(NAME)
 	$(VALGRIND) ./$(NAME)
 
 # Run valgrind on bonus
-valgrind_bonus: $(BONUS_NAME)
+bonus_valgrind: $(BONUS_NAME)
 	$(VALGRIND) ./$(BONUS_NAME)
 
 # Define phony targets
-.PHONY: all clean clean_objects fclean re bonus buffer buffer_bonus tests tests_bonus create delete re_buffer re_bonus re_buffer_bonus valgrind valgrind_bonus
+.PHONY: all clean clean_objects fclean re bonus buffer bonus_buffer tests bonus_tests create delete re_buffer re_bonus re_bonus_buffer valgrind bonus_valgrind
