@@ -6,11 +6,67 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:48:00 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/10 15:19:26 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/11 17:41:46 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*ft_strutil(const char *s, int c, size_t *len)
+{
+	size_t	i;
+	char	*found;
+
+	i = 0;
+	found = NULL;
+	if (!s)
+	{
+		if (len)
+			*len = 0;
+		return (NULL);
+	}
+	while (s[i])
+	{
+		if (!found && s[i] == (char)c)
+			found = (char *)&s[i];
+		i++;
+	}
+	if (!found && s[i] == (char)c)
+		found = (char *)&s[i];
+	if (len)
+		*len = i;
+	return (found);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*str;
+	size_t	len1;
+	size_t	len2;
+	size_t	i;
+	size_t	j;
+
+	if (!s2)
+		return (NULL);
+	ft_strutil(s1, 0, &len1);
+	ft_strutil(s2, 0, &len2);
+	str = malloc(len1 + len2 + 1);
+	if (!str)
+		return (NULL);
+	i = 0;
+	j = 0;
+	if (s1)
+	{
+		while (s1[i])
+			str[j++] = s1[i++];
+		free(s1);
+	}
+	i = 0;
+	while (s2[i])
+		str[j++] = s2[i++];
+	str[j] = '\0';
+	return (str);
+}
 
 void	*handle_buffer(char *buffer, char **line)
 {
@@ -40,44 +96,6 @@ void	*handle_buffer(char *buffer, char **line)
 	return (*line);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*str;
-	int		i;
-	int		j;
-
-	if (!s2)
-		return (NULL);
-	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!str)
-		return (NULL);
-	i = 0;
-	j = 0;
-	if (s1)
-	{
-		while (s1[i])
-			str[j++] = s1[i++];
-		free(s1);
-	}
-	i = 0;
-	while (s2[i])
-		str[j++] = s2[i++];
-	str[j] = '\0';
-	return (str);
-}
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i])
-		i++;
-	return (i);
-}
-
 void	clean_buffer(char *buffer)
 {
 	int	i;
@@ -92,19 +110,4 @@ void	clean_buffer(char *buffer)
 	while (buffer[i])
 		buffer[j++] = buffer[i++];
 	buffer[j] = '\0';
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	if (!s)
-		return (NULL);
-	while (*s)
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
-	}
-	if (*s == (char)c)
-		return ((char *)s);
-	return (NULL);
 }

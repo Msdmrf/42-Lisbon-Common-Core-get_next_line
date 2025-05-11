@@ -6,48 +6,51 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:48:17 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/10 17:24:42 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/11 17:41:10 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-size_t	ft_strlen(const char *s)
+char	*ft_strutil(const char *s, int c, size_t *len)
 {
 	size_t	i;
+	char	*found;
 
 	i = 0;
+	found = NULL;
 	if (!s)
-		return (0);
-	while (s[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	if (!s)
-		return (NULL);
-	while (*s)
 	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
+		if (len)
+			*len = 0;
+		return (NULL);
 	}
-	if (*s == (char)c)
-		return ((char *)s);
-	return (NULL);
+	while (s[i])
+	{
+		if (!found && s[i] == (char)c)
+			found = (char *)&s[i];
+		i++;
+	}
+	if (!found && s[i] == (char)c)
+		found = (char *)&s[i];
+	if (len)
+		*len = i;
+	return (found);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
-	int		i;
-	int		j;
+	size_t	len1;
+	size_t	len2;
+	size_t	i;
+	size_t	j;
 
 	if (!s2)
 		return (NULL);
-	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	ft_strutil(s1, 0, &len1);
+	ft_strutil(s2, 0, &len2);
+	str = malloc(len1 + len2 + 1);
 	if (!str)
 		return (NULL);
 	i = 0;
