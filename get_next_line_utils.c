@@ -6,7 +6,7 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:48:00 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/11 17:41:46 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/11 17:57:46 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,30 +41,28 @@ char	*ft_strutil(const char *s, int c, size_t *len)
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
-	size_t	len1;
-	size_t	len2;
-	size_t	i;
-	size_t	j;
+	size_t	lens[2];
+	size_t	idx[2];
 
 	if (!s2)
 		return (NULL);
-	ft_strutil(s1, 0, &len1);
-	ft_strutil(s2, 0, &len2);
-	str = malloc(len1 + len2 + 1);
+	ft_strutil(s1, 0, &lens[0]);
+	ft_strutil(s2, 0, &lens[1]);
+	str = malloc(lens[0] + lens[1] + 1);
 	if (!str)
 		return (NULL);
-	i = 0;
-	j = 0;
+	idx[0] = 0;
+	idx[1] = 0;
 	if (s1)
 	{
-		while (s1[i])
-			str[j++] = s1[i++];
+		while (s1[idx[0]])
+			str[idx[1]++] = s1[idx[0]++];
 		free(s1);
 	}
-	i = 0;
-	while (s2[i])
-		str[j++] = s2[i++];
-	str[j] = '\0';
+	idx[0] = 0;
+	while (s2[idx[0]])
+		str[idx[1]++] = s2[idx[0]++];
+	str[idx[1]] = '\0';
 	return (str);
 }
 
