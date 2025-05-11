@@ -6,75 +6,78 @@
 #    By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/02 13:33:40 by migusant          #+#    #+#              #
-#    Updated: 2025/05/11 16:14:17 by migusant         ###   ########.fr        #
+#    Updated: 2025/05/11 16:31:00 by migusant         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # **************************************************************************** #
-# Basic Compilation Commands:                                                  #
+#                                                                              #
+# Mandatory Part Commands:                                                     #
+#                                                                              #
 #  1. make                                                                     #
-#    - Default compilation of mandatory part without explicit BUFFER_SIZE      #
+#    - Default compilation without explicit BUFFER_SIZE                        #
 #    - Creates executable: get_next_line                                       #
 #                                                                              #
-#  2. make bonus                                                               #
-#    - Compiles bonus part without explicit BUFFER_SIZE                        #
-#    - Creates executable: get_next_line_bonus                                 #
-#                                                                              #
-#  3. make buffer                                                              #
-#    - Compiles mandatory part with BUFFER_SIZE=42                             #
+#  2. make buffer                                                              #
+#    - Compiles with BUFFER_SIZE=42                                            #
 #    - Creates executable: get_next_line                                       #
 #                                                                              #
-#  4. make bonus_buffer                                                        #
-#    - Compiles bonus part with BUFFER_SIZE=42                                 #
-#    - Creates executable: get_next_line_bonus                                 #
-#                                                                              #
-# Recompilation Commands:                                                      #
-#  5. make re                                                                  #
-#    - Cleans everything and recompiles mandatory part without BUFFER_SIZE     #
+#  3. make re                                                                  #
+#    - Cleans everything and recompiles without BUFFER_SIZE                    #
 #    - Creates executable: get_next_line                                       #
 #                                                                              #
-#  6. make re_buffer                                                           #
-#    - Cleans everything and recompiles mandatory part with BUFFER_SIZE=42     #
+#  4. make re_buffer                                                           #
+#    - Cleans everything and recompiles with BUFFER_SIZE=42                    #
 #    - Creates executable: get_next_line                                       #
 #                                                                              #
-#  7. make re_bonus                                                            #
-#    - Cleans everything and recompiles bonus part without BUFFER_SIZE         #
-#    - Creates executable: get_next_line_bonus                                 #
-#                                                                              #
-#  8. make re_bonus_buffer                                                     #
-#    - Cleans everything and recompiles bonus part with BUFFER_SIZE=42         #
-#    - Creates executable: get_next_line_bonus                                 #
-#                                                                              #
-# Cleaning Commands:                                                           #
-#  9. make clean                                                               #
-#    - Removes all object files (.o)                                           #
-#                                                                              #
-#  10. make fclean                                                             #
-#    - Removes all object files and executables                                #
-#                                                                              #
-#  11. make delete                                                             #
-#    - Removes all test files (test_*.txt and test[1-3].txt)                   #
-#                                                                              #
-# Test Related Commands:                                                       #
-#  12. make create                                                             #
-#    - Creates test files if they don't exist                                  #
-#                                                                              #
-#  13. make tests                                                              #
+#  5. make tests                                                               #
 #    - Runs tests for mandatory part                                           #
 #    - Requires get_next_line executable                                       #
 #                                                                              #
-#  14. make bonus_tests                                                        #
-#    - Runs tests for bonus part                                               #
-#    - Requires get_next_line_bonus executable                                 #
-#                                                                              #
-# Debugging Commands:                                                          #
-#  15. make valgrind                                                           #
+#  6. make valgrind                                                            #
 #    - Runs valgrind on mandatory part                                         #
 #    - Checks for memory leaks                                                 #
 #                                                                              #
-#  16. make bonus_valgrind                                                     #
+# Bonus Part Commands:                                                         #
+#                                                                              #
+#  7. make bonus                                                               #
+#    - Compiles bonus part without explicit BUFFER_SIZE                        #
+#    - Creates executable: get_next_line_bonus                                 #
+#                                                                              #
+#  8. make bonus_buffer                                                        #
+#    - Compiles bonus part with BUFFER_SIZE=42                                 #
+#    - Creates executable: get_next_line_bonus                                 #
+#                                                                              #
+#  9. make re_bonus                                                            #
+#    - Cleans everything and recompiles bonus without BUFFER_SIZE              #
+#    - Creates executable: get_next_line_bonus                                 #
+#                                                                              #
+#  10. make re_bonus_buffer                                                    #
+#    - Cleans everything and recompiles bonus with BUFFER_SIZE=42              #
+#    - Creates executable: get_next_line_bonus                                 #
+#                                                                              #
+#  11. make bonus_tests                                                        #
+#    - Runs tests for bonus part                                               #
+#    - Requires get_next_line_bonus executable                                 #
+#                                                                              #
+#  12. make bonus_valgrind                                                     #
 #    - Runs valgrind on bonus part                                             #
 #    - Checks for memory leaks                                                 #
+#                                                                              #
+# Common Commands:                                                             #
+#                                                                              #
+#  13. make clean                                                              #
+#    - Removes all object files (.o)                                           #
+#                                                                              #
+#  14. make fclean                                                             #
+#    - Removes all object files and executables                                #
+#                                                                              #
+#  15. make create                                                             #
+#    - Creates test files if they don't exist                                  #
+#                                                                              #
+#  16. make delete                                                             #
+#    - Removes all test files (test_*.txt and test[1-3].txt)                   #
+#                                                                              #
 # **************************************************************************** #
 
 # Program names
@@ -174,10 +177,6 @@ create:
 		echo "Test files already exist. Use 'make delete' to remove them first."; \
 	fi
 
-# Clean just object files
-clean_objects:
-	@$(RM) $(OFILES) $(BOFILES)
-
 # Clean object files
 clean:
 	@if [ -f "$(word 1,$(OFILES))" ] || [ -f "$(word 1,$(BOFILES))" ] || \
@@ -255,4 +254,4 @@ bonus_valgrind: $(BONUS_NAME)
 	$(VALGRIND) ./$(BONUS_NAME)
 
 # Define phony targets
-.PHONY: all clean clean_objects fclean re bonus buffer bonus_buffer tests bonus_tests create delete re_buffer re_bonus re_bonus_buffer valgrind bonus_valgrind
+.PHONY: all clean fclean re bonus buffer bonus_buffer tests bonus_tests create delete re_buffer re_bonus re_bonus_buffer valgrind bonus_valgrind
