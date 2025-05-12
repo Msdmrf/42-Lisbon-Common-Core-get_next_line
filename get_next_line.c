@@ -6,7 +6,7 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:40:32 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/12 12:07:28 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/12 20:36:44 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,42 +16,21 @@ char	*get_next_line(int fd)
 {
 	static char	buffer[BUFFER_SIZE + 1];
 	char		*line;
-	char		*temp;
 	int			bytes;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	line = NULL;
-	if (buffer[0])
+	bytes = 1;
+	while (!ft_strlenchr(line, NULL))
 	{
-		temp = ft_buffer_extract(buffer);
-		if (!temp)
-			return (NULL);
-		line = ft_strjoin(line, temp);
-		free(temp);
-		ft_buffer_clean(buffer);
-	}
-	while (!ft_strlenchr(line, '\n', NULL))
-	{
-		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (bytes <= 0)
-		{
-			if (bytes < 0 || !line || !*line)
-			{
-				free(line);
-				return (NULL);
-			}
+		if (!buffer[0])
+			bytes = read(fd, buffer, BUFFER_SIZE);
+		if (bytes < 0)
+			return (free(line), NULL);
+		if (bytes == 0)
 			return (line);
-		}
-		buffer[bytes] = '\0';
-		temp = ft_buffer_extract(buffer);
-		if (!temp)
-		{
-			free(line);
-			return (NULL);
-		}
-		line = ft_strjoin(line, temp);
-		free(temp);
+		line = ft_strjoin(line, buffer);
 		ft_buffer_clean(buffer);
 	}
 	return (line);
