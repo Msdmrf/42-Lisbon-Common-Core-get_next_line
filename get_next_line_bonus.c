@@ -6,7 +6,7 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:46:30 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/11 20:21:05 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/12 12:08:03 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,43 @@ char	*get_next_line(int fd)
 {
 	static char	buffer[FOPEN_MAX][BUFFER_SIZE + 1];
 	char		*line;
-	ssize_t		bytes;
+	char		*temp;
+	int			bytes;
 
 	if (fd < 0 || fd >= FOPEN_MAX || BUFFER_SIZE <= 0)
 		return (NULL);
 	line = NULL;
 	if (buffer[fd][0])
-		line = ft_bufexclean(buffer[fd], &line);
+	{
+		temp = ft_buffer_extract(buffer[fd]);
+		if (!temp)
+			return (NULL);
+		line = ft_strjoin(line, temp);
+		free(temp);
+		ft_buffer_clean(buffer[fd]);
+	}
 	while (!ft_strlenchr(line, '\n', NULL))
 	{
 		bytes = read(fd, buffer[fd], BUFFER_SIZE);
-		if (bytes < 0)
+		if (bytes <= 0)
 		{
-			if (line)
+			if (bytes < 0 || !line || !*line)
+			{
 				free(line);
-			buffer[fd][0] = '\0';
-			return (NULL);
-		}
-		if (bytes == 0)
-		{
-			buffer[fd][0] = '\0';
+				return (NULL);
+			}
 			return (line);
 		}
 		buffer[fd][bytes] = '\0';
-		line = ft_bufexclean(buffer[fd], &line);
+		temp = ft_buffer_extract(buffer[fd]);
+		if (!temp)
+		{
+			free(line);
+			return (NULL);
+		}
+		line = ft_strjoin(line, temp);
+		free(temp);
+		ft_buffer_clean(buffer[fd]);
 	}
 	return (line);
 }
