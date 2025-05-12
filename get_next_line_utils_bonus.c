@@ -6,36 +6,30 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:48:17 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/12 12:09:02 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/12 20:48:07 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-char	*ft_strlenchr(const char *s, int c, size_t *len)
+char	*ft_strlenchr(const char *s, size_t *len)
 {
 	size_t	i;
-	char	*found;
 
 	i = 0;
-	found = NULL;
 	if (!s)
 	{
 		if (len)
 			*len = 0;
 		return (NULL);
 	}
-	while (s[i])
-	{
-		if (!found && s[i] == (char)c)
-			found = (char *)&s[i];
+	while (s[i] && s[i] != '\n')
 		i++;
-	}
-	if (!found && s[i] == (char)c)
-		found = (char *)&s[i];
 	if (len)
-		*len = i;
-	return (found);
+		*len = i + (s[i] == '\n');
+	if (s[i] != '\n')
+		return (NULL);
+	return ((char *)s + i);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
@@ -44,51 +38,24 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	lens[2];
 	size_t	idx[2];
 
-	if (!s2)
-		return (NULL);
-	ft_strlenchr(s1, 0, &lens[0]);
-	ft_strlenchr(s2, 0, &lens[1]);
+	ft_strlenchr(s1, &lens[0]);
+	ft_strlenchr(s2, &lens[1]);
 	str = malloc(lens[0] + lens[1] + 1);
 	if (!str)
-		return (NULL);
+		return (free(s1), NULL);
 	idx[0] = 0;
 	idx[1] = 0;
-	if (s1)
-	{
-		while (s1[idx[0]])
-			str[idx[1]++] = s1[idx[0]++];
-		free(s1);
-	}
+	while (s1 && s1[idx[0]])
+		str[idx[1]++] = s1[idx[0]++];
 	idx[0] = 0;
 	while (s2[idx[0]])
-		str[idx[1]++] = s2[idx[0]++];
-	str[idx[1]] = '\0';
-	return (str);
-}
-
-char	*ft_buffer_extract(char *buffer)
-{
-	char	*temp;
-	size_t	i;
-	size_t	len;
-
-	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
-		i++;
-	if (buffer[i] == '\n')
-		i++;
-	len = i;
-	temp = malloc(len + 1);
-	if (!temp)
-		return (NULL);
-	i = 0;
-	while (i < len)
 	{
-		temp[i] = buffer[i];
-		i++;
+		str[idx[1]++] = s2[idx[0]];
+		if (s2[idx[0]++] == '\n')
+			break ;
 	}
-	temp[len] = '\0';
-	return (temp);
+	str[idx[1]] = '\0';
+	return (free(s1), str);
 }
 
 void	ft_buffer_clean(char *buffer)
@@ -98,11 +65,13 @@ void	ft_buffer_clean(char *buffer)
 
 	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
-		i++;
+		buffer[i++] = '\0';
 	if (buffer[i] == '\n')
-		i++;
+		buffer[i++] = '\0';
 	j = 0;
 	while (buffer[i])
-		buffer[j++] = buffer[i++];
-	buffer[j] = '\0';
+	{
+		buffer[j++] = buffer[i];
+		buffer[i++] = '\0';
+	}
 }
