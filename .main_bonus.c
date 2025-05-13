@@ -6,12 +6,14 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 15:41:56 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/13 10:24:52 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:18:52 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 #include <fcntl.h>
+
+// clear && cc get_next_line_bonus.c get_next_line_utils_bonus.c .main_bonus.c && valgrind --leak-check=full ./a.out || cat -e
 
 void	test_single_fd(int fd, const char *test_name)
 {

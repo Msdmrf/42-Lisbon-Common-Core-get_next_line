@@ -6,13 +6,15 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 15:37:43 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/13 10:23:51 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:19:23 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 #include <fcntl.h>
+
+// clear && cc get_next_line.c get_next_line_utils.c .main.c && valgrind --leak-check=full ./a.out || cat -e
 
 void	test_fd(int fd, const char *test_name)
 {
