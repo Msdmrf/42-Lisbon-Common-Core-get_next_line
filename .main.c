@@ -6,11 +6,13 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 15:37:43 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/11 13:51:55 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/13 10:23:51 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
+#include <fcntl.h>
 
 void	test_fd(int fd, const char *test_name)
 {

@@ -6,11 +6,12 @@
 /*   By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 15:41:56 by migusant          #+#    #+#             */
-/*   Updated: 2025/05/11 15:34:30 by migusant         ###   ########.fr       */
+/*   Updated: 2025/05/13 10:24:52 by migusant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+#include <fcntl.h>
 
 void	test_single_fd(int fd, const char *test_name)
 {
